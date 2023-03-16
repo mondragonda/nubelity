@@ -67,20 +67,16 @@ const ButtonBar = styled.div`
     flex-direction: row;
     cursor: pointer;
     align-items: center;
-    background-color: snow;
 `;
 
 const hoverAnimation = keyframes`
     0%{
-        opacity: 0.5;
-        transform: translateY(15px);
     }
     50%{
-        opacity: 0;
+        color: grey;
         transform: translateY(30px);
     }
     100%{
-        opacity: 1;
         color: yellowgreen;
         transform: translateY(0);
     }
