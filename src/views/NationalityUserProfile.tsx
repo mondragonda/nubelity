@@ -47,19 +47,9 @@ const UserPhoto = styled.img`
     border-radius: 112px;
 `;
 
-const showKeyframe = keyframes`
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-`
-
 const InfoSection = styled.div`
     min-height: 15vh;
     padding: 0 48px 0 48px;
-    animation: ${showKeyframe} 0.3s;
 `;
 
 const UserTitle = styled.p`
@@ -77,14 +67,20 @@ const ButtonBar = styled.div`
     flex-direction: row;
     cursor: pointer;
     align-items: center;
+    background-color: snow;
 `;
 
 const hoverAnimation = keyframes`
+    0%{
+        opacity: 0.5;
+        transform: translateY(15px);
+    }
     50%{
-        color: grey;
+        opacity: 0;
         transform: translateY(30px);
     }
     100%{
+        opacity: 1;
         color: yellowgreen;
         transform: translateY(0);
     }
@@ -99,6 +95,15 @@ const IconHoverWrapper = styled.div<{spaced: boolean, active?: boolean}>`
     `}
     &:hover{
         animation: ${hoverAnimation} 0.3s;
+    }
+    &:hover:after{
+        content: '';
+        position: absolute;
+        left: 0;
+        top: -50px;
+        height: 50px;
+        width: 100%;
+        box-sizing: border-box;
     }
 `;
 
@@ -152,10 +157,7 @@ const NationalityUserProfile = () => {
                                 return {..._icon, active: false}
                             }))
                         }} >
-                            <icon.component 
-                                // size={icon.active ? 40 : 25} 
-                                // color={icon.active ? "darkolivegreen": "grey"}
-                            />
+                            <icon.component/>
                         </IconHoverWrapper>
                     )
                 })}
