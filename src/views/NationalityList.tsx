@@ -11,7 +11,6 @@ const ListContainer = styled.div`
     justify-content: center;
     align-items: center;
     color: black;
-    width: 60%;
     align-self: center;
 `;
 

@@ -5,6 +5,7 @@ import "./index.css";
 import NationalityList from "./views/NationalityList";
 import NationalityUserList from "./views/NationalityUserList";
 import NationalityUserProfile from "./views/NationalityUserProfile";
+import UserService, { NationalityCode } from './services/UserService';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/:nationality/users",
-    element: <NationalityUserList/>
+    element: <NationalityUserList/>,
+    loader: async ({ params }) => {
+      return UserService.requestUsersByNationality(params.nationality as NationalityCode); 
+    }
   },
   {
     path: "/users/:id",

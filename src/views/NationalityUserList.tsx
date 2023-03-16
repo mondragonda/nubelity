@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import ListItem from "../components/ListItem";
 import UserService, { NationalityCode } from '../services/UserService';
@@ -26,19 +25,14 @@ const HeaderContainer = styled.div`
     align-items: center;
 `;
 
+const Loading = styled.h5`
+    align-self: center;
+`;
+
 const NationalityUserList = () => {
     const { nationality } = useParams();
     const navigate = useNavigate();
-    const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        if (nationality){
-          UserService.requestUsersByNationality(nationality as NationalityCode).then((users) => {
-            setUsers(users);
-          })
-        }
-    }, [nationality])
-
+    const users = useLoaderData() as User[];
     const nationalityInfo = UserService.requestNationalityByCode(nationality as NationalityCode);
 
     return (
@@ -47,14 +41,14 @@ const NationalityUserList = () => {
                     <img alt={nationalityInfo?.name+' Flag'} width={80} height={80} src={nationalityInfo?.flag}/>
                     <h2>Users</h2>
                 </HeaderContainer>
-               {users.map((user: User) => {
+               {users.length > 0 ? users.map((user: User) => {
                 return (
                     <ListItem onClick={() => navigate(`/users/${user.login.uuid}`, {state: {user}})} key={user.login.uuid}>
                       <img alt={user.name.first+user.name.last} src={user.picture.medium }/>
                       <h5>{user.name.first} {user.name.last}</h5>
                     </ListItem>
                 )
-            })}
+            }) : <Loading>Loading...</Loading>}
         </ListContainer>
     );
 }
